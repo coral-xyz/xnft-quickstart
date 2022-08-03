@@ -1,0 +1,19 @@
+{
+  "name": "armani",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "build": "xnft build",
+    "start": "xnft watch",
+    "dev": "xnft dev"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@coral-xyz/xnft-cli": "^0.0.1"
+  },
+  "dependencies": {
+    "react-xnft": "^0.0.2"
+  }
+}
