@@ -4,7 +4,7 @@ Quickstart repo for building your own xNFT.
 
 ## Developing
 
-Once you've installed Backpack, get started building your xNFT with these setps.
+Once you've installed Backpack, get started building your xNFT with these steps.
 
 ### Install
 
