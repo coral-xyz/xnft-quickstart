@@ -1,3 +1,4 @@
+import React from "react";
 import ReactXnft, { Text, View } from "react-xnft";
 
 //
