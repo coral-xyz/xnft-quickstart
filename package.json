@@ -1,20 +1,26 @@
 {
   "name": "xnft-quickstart",
-  "version": "1.0.0",
+  "version": "2.0.0",
   "description": "",
   "main": "index.js",
-  "scripts": {
-    "build": "xnft build",
-    "start": "xnft watch",
-    "dev": "xnft dev"
-  },
   "author": "",
   "license": "ISC",
+  "scripts": {
+    "build": "npx xnft native build",
+    "start": "npx xnft native start",
+    "dev": "npx xnft native dev"
+  },
   "devDependencies": {
     "@coral-xyz/xnft-cli": "latest"
   },
   "dependencies": {
+    "@types/react-native": "^0.70.6",
+    "react": "18.1.0",
+    "react-dom": "18.1.0",
+    "react-native": "0.70.5",
+    "react-native-web": "~0.18.7",
     "react-xnft": "latest",
-    "react": "^17.0.2"
+    "recoil": "0.7.5",
+    "twrnc": "^3.4.1"
   }
 }
