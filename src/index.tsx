@@ -1,8 +1,8 @@
-import ReactXnft, { AnchorDom } from "react-xnft";
-import { App } from "./App";
+import { AppRegistry } from "react-native";
+import { RunNativeXnft } from "react-xnft";
 
-ReactXnft.render(
-  <AnchorDom>
-    <App />
-  </AnchorDom>
-);
+import App from "./App";
+
+AppRegistry.registerComponent("xNFT", () => App);
+
+RunNativeXnft(AppRegistry);
