@@ -737,6 +737,14 @@
     uuid "^8.3.2"
     zustand "^4.0.0-rc.2"
 
+"@coral-xyz/common-public@latest":
+  version "0.2.0-latest.884"
+  resolved "https://registry.yarnpkg.com/@coral-xyz/common-public/-/common-public-0.2.0-latest.884.tgz#2c9721ac558f34e1f59d7ae44e1f03e6803e534a"
+  integrity sha512-Clw9DJo+POXRhI9A9by7TLGi2aQgCztglTOyyINou9bcB+8tJ3V28CADS8U5f5FYlb7/vZ9HcfE4uRRc6/f+Uw==
+  dependencies:
+    uuid "^8.3.2"
+    zustand "^4.0.0-rc.2"
+
 "@coral-xyz/themes@*":
   version "0.0.1"
   resolved "https://registry.yarnpkg.com/@coral-xyz/themes/-/themes-0.0.1.tgz#de836f4645f94bb7d770366e8e5f74a1469dad18"

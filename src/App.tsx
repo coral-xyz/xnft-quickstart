@@ -1,5 +1,6 @@
 import React from "react";
 import { Button, View } from "react-native";
+import { useDidLaunch } from "./hooks";
 import { atom, RecoilRoot, useRecoilState } from "recoil";
 import tw from "twrnc";
 
@@ -10,6 +11,8 @@ const testAtom = atom<"native" | "bright">({
 
 function Root() {
   const [future, setFuture] = useRecoilState(testAtom);
+  const ready = useDidLaunch();
+  console.log(ready);
   return (
     <View
       style={tw`h-full ${
