@@ -14,6 +14,7 @@
     "@coral-xyz/xnft-cli": "latest"
   },
   "dependencies": {
+    "@coral-xyz/common-public": "latest",
     "@types/react-native": "^0.70.6",
     "react": "18.1.0",
     "react-dom": "18.1.0",
