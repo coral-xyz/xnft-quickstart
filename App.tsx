@@ -3,7 +3,7 @@ import { ActivityIndicator, View } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
-import { useFonts, Inter_900Black } from '@expo-google-fonts/inter';
+import { useFonts, Inter_900Black } from '@expo-google-fonts/dev';
 
 import { ExamplesScreens } from './screens/ExamplesScreen';
 import { HomeScreen } from './screens/HomeScreen';
