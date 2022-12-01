@@ -1,29 +1,34 @@
 const createExpoWebpackConfigAsync = require('@expo/webpack-config');
-// const HtmlWebpackPlugin = require("html-webpack-plugin");
+const fs = require("fs");
 
 module.exports = async function (env, argv) {
   const config = await createExpoWebpackConfigAsync(env, argv);
   // Customize the config before returning it.
+
+  config.output = {
+    globalObject: 'this',
+    path: __dirname + "/dist/.artifacts/",
+    filename: 'index.js',
+  };
 
   config.optimization.splitChunks = {
     cacheGroups: {
       default: false,
     },
   };
+  config.optimization.runtimeChunk = false;
+
+
+  config.plugins = config.plugins.filter(
+    (plugin) => ["DefinePlugin", "CleanWebpackPlugin"].includes(plugin.constructor.name)
+  )
 
   config.plugins.push(
-    // new HtmlWebpackPlugin({
-    //   title: "My Web App",
-    //   template: "template.thtml",
-    //   // this is a workaround for the injection of the code from the output file into the .html
-    //   // the injection will be handled in the template file
-    //   inject: "body",
-    // })
+    new InlineJSPlugin({
+      template: "template.html",
+      filename: "index.html"
+    })
   );
-
-  // console.log(config.plugins.HtmlWebpackPlugin.options.inline = "body");
-  // config.plugins[1].options.inline = "body"
-  config.optimization.runtimeChunk = false;
 
 
   // this is brittle but works for now.
@@ -36,3 +41,24 @@ module.exports = async function (env, argv) {
   return config;
 
 };
+
+// const logger = console.log.bind(console);
+
+class InlineJSPlugin {
+  constructor({ template, filename }) {
+    this.options = {
+      template,
+      filename
+    }
+  }
+  apply(compiler) {
+    compiler.hooks.done.tap('HelloCompilationPlugin', (stats) => {
+      const filename = stats.compilation.outputOptions.filename;
+      const path = stats.compilation.outputOptions.path;
+      const asset = stats.compilation.assets[filename];
+      const JSBundle = asset.children[0]._value;
+      const template = fs.readFileSync(this.options.template).toString().split("####JS####");
+      fs.writeFileSync(path + "/../" + this.options.filename, template[0] + JSBundle + template[1]);
+    });
+  }
+}
