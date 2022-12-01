@@ -56,7 +56,7 @@ class InlineJSPlugin {
     }
   }
   apply(compiler) {
-    compiler.hooks.done.tap('HelloCompilationPlugin', (stats) => {
+    compiler.hooks.done.tap('InlineJSPlugin', (stats) => {
       const filename = stats.compilation.outputOptions.filename;
       const path = stats.compilation.outputOptions.path;
       const asset = stats.compilation.assets[filename];
