@@ -1,6 +1,13 @@
+import { ReactNode } from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 
-export function Section({ title, children }) {
+
+type Props = {
+  title: string,
+  children: JSX.Element | JSX.Element[] | null
+}
+
+export function Section({ title, children }: Props) {
   return (
     <View style={styles.container}>
       <Text style={styles.title}>{title}</Text>

@@ -6,6 +6,8 @@ declare global {
   interface Window { xnft: any; }
 }
 
+export { useColorScheme } from 'react-native';
+
 /*
  * @Depreciated over usePublicKeys
  */
@@ -80,7 +82,7 @@ export function useDidLaunch() {
   return didConnect;
 }
 
-export const useXnftReady = useDidLaunch;
+export const useReady = useDidLaunch;
 
 export function useMetadata(): XnftMetadata {
   const [metadata, setMetadata] = useState(window.xnft?.metadata || {});
@@ -100,13 +102,13 @@ export function useDimensions(debounceMs = 0) {
     width: window.innerWidth,
   });
 
-  const debounce = (fn) => {
-    let timer;
-    return () => {
+  const debounce = (fn: Function) => {
+    let timer: ReturnType<typeof setTimeout>;
+    return function () {
       clearTimeout(timer);
       timer = setTimeout(() => {
-        timer = null;
-        // eslint-disable-next-line
+        clearTimeout(timer)
+        // @ts-ignore
         fn.apply(this, arguments);
       }, debounceMs);
     };

@@ -6,6 +6,7 @@
     "dev": "expo start --web & xnft dev --iframe http://localhost:19006"
   },
   "dependencies": {
+    "@coral-xyz/common-public": "^0.2.0-latest.971",
     "@expo-google-fonts/dev": "*",
     "@expo/vector-icons": "^13.0.0",
     "@expo/webpack-config": "^0.17.2",
@@ -18,6 +19,7 @@
     "@react-navigation/native": "6.0.10",
     "@react-navigation/native-stack": "6.6.1",
     "@react-navigation/stack": "6.2.1",
+    "@solana/web3.js": "^1.67.2",
     "expo": "~47.0.8",
     "expo-constants": "~14.0.2",
     "expo-linking": "~3.2.3",

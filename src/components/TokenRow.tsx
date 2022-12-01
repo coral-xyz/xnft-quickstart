@@ -1,6 +1,14 @@
 import { Text, Pressable, StyleSheet, Image, View } from 'react-native';
 
-export function TokenRow({ id, name, price, imageUrl, onPress }) {
+type Props = { 
+  id: string, 
+  name: string, 
+  price: string, 
+  imageUrl: string, 
+  onPress: (id: string) => void 
+};
+
+export function TokenRow({ id, name, price, imageUrl, onPress }: Props) {
   return (
     <Pressable onPress={() => onPress(id)} style={styles.container}>
       <View style={{ flexDirection: 'row', alignItems: 'center' }}>

@@ -1,4 +1,4 @@
-import * as React from 'react';
+import { useEffect,useState } from 'react';
 import {
   View,
   Text,
@@ -8,12 +8,19 @@ import {
   Animated,
 } from 'react-native';
 import tw from 'twrnc';
-import { createStackNavigator } from '@react-navigation/stack';
+import { createStackNavigator, StackCardStyleInterpolator } from '@react-navigation/stack';
+import type { NativeStackScreenProps } from '@react-navigation/native-stack';
+
 
 import { Screen } from '../components/Screen';
 import { TokenRow } from '../components/TokenRow';
 
-const Stack = createStackNavigator();
+type RootStackParamList = {
+  List: {};
+  Detail: { id: string };
+};
+
+const Stack = createStackNavigator<RootStackParamList>();
 
 function FullScreenLoadingIndicator() {
   return (
@@ -29,10 +36,10 @@ async function fetchTokenData(count = 20) {
 }
 
 function useTokenData() {
-  const [loading, setLoading] = React.useState(true);
-  const [data, setData] = React.useState([]);
+  const [loading, setLoading] = useState(true);
+  const [data, setData] = useState<any[]>([]);
 
-  React.useEffect(() => {
+  useEffect(() => {
     async function fetch() {
       setLoading(true);
       const data = await fetchTokenData();
@@ -47,7 +54,7 @@ function useTokenData() {
   return { data, loading };
 }
 
-function List({ navigation }) {
+function List({ navigation }: NativeStackScreenProps<RootStackParamList, "List">) {
   const { data, loading } = useTokenData();
 
   const handlePressTokenRow = (id: string) => {
@@ -87,7 +94,7 @@ function List({ navigation }) {
   );
 }
 
-function Detail({ route }) {
+function Detail({ route }: NativeStackScreenProps<RootStackParamList, "Detail">) {
   const { data, loading } = useTokenData();
   const { id } = route.params;
 
@@ -116,7 +123,7 @@ function Detail({ route }) {
   );
 }
 
-const forSlide = ({ current, next, inverted, layouts: { screen } }) => {
+const forSlide: StackCardStyleInterpolator = ({ current, next, inverted, layouts: { screen } }) => {
   const progress = Animated.add(
     current.progress.interpolate({
       inputRange: [0, 1],

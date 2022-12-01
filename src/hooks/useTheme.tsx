@@ -1,4 +1,4 @@
-import { useColorScheme } from 'react-native';
+import { useColorScheme } from '../xnft-hooks';
 
 export function useTheme() {
   const colorScheme = useColorScheme();
