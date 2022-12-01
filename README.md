@@ -29,7 +29,7 @@ Now that you have your xNFT dev server running, open it in the Backpack simulato
 That's it!
 
 
-### Build
+## Build & Publish
 
 Once you're done and ready to publish, build your xNFT:
 
