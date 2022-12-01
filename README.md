@@ -27,3 +27,20 @@ yarn dev
 Now that you have your xNFT dev server running, open it in the Backpack simulator to see it run.
 
 That's it!
+
+
+## Build & Publish
+
+Once you're done and ready to publish, build your xNFT:
+
+```
+yarn build
+```
+
+Test the newly created build in `dist/index.html` in the simulator:
+
+```
+yarn start
+```
+
+Once everything looks good head over to [xnft.gg]() to publish your xNFT!

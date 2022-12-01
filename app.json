@@ -1,0 +1,7 @@
+{
+  "expo": {
+    "name": "react-native-xnft",
+    "slug": "react-native-xnft",
+    "entryPoint": "./src/App"
+  }
+}
