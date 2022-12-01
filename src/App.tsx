@@ -1,3 +1,4 @@
+import { registerRootComponent } from 'expo';
 import { RecoilRoot } from 'recoil';
 import { ActivityIndicator, View } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
@@ -53,7 +54,7 @@ function TabNavigator() {
   );
 }
 
-export default function App() {
+function App() {
   let [fontsLoaded] = useFonts({
     Inter_900Black,
   });
@@ -74,3 +75,5 @@ export default function App() {
     </RecoilRoot>
   );
 }
+
+export default registerRootComponent(App);
