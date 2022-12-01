@@ -1,4 +1,4 @@
-import { useEffect,useState } from 'react';
+import { useEffect, useState } from "react";
 import {
   View,
   Text,
@@ -6,14 +6,16 @@ import {
   Image,
   ActivityIndicator,
   Animated,
-} from 'react-native';
-import tw from 'twrnc';
-import { createStackNavigator, StackCardStyleInterpolator } from '@react-navigation/stack';
-import type { NativeStackScreenProps } from '@react-navigation/native-stack';
+} from "react-native";
+import tw from "twrnc";
+import {
+  createStackNavigator,
+  StackCardStyleInterpolator,
+} from "@react-navigation/stack";
+import type { NativeStackScreenProps } from "@react-navigation/native-stack";
 
-
-import { Screen } from '../components/Screen';
-import { TokenRow } from '../components/TokenRow';
+import { Screen } from "../components/Screen";
+import { TokenRow } from "../components/TokenRow";
 
 type RootStackParamList = {
   List: {};
@@ -24,7 +26,7 @@ const Stack = createStackNavigator<RootStackParamList>();
 
 function FullScreenLoadingIndicator() {
   return (
-    <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+    <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
       <ActivityIndicator />
     </View>
   );
@@ -43,7 +45,7 @@ function useTokenData() {
     async function fetch() {
       setLoading(true);
       const data = await fetchTokenData();
-      console.log("data", data)
+      console.log("data", data);
       setData(data);
       setLoading(false);
     }
@@ -54,11 +56,13 @@ function useTokenData() {
   return { data, loading };
 }
 
-function List({ navigation }: NativeStackScreenProps<RootStackParamList, "List">) {
+function List({
+  navigation,
+}: NativeStackScreenProps<RootStackParamList, "List">) {
   const { data, loading } = useTokenData();
 
   const handlePressTokenRow = (id: string) => {
-    navigation.push('Detail', { id });
+    navigation.push("Detail", { id });
   };
 
   if (loading) {
@@ -67,7 +71,7 @@ function List({ navigation }: NativeStackScreenProps<RootStackParamList, "List">
 
   const ItemSeparatorComponent = () => (
     <View
-      style={{ marginVertical: 8, borderColor: '#eee', borderBottomWidth: 1 }}
+      style={{ marginVertical: 8, borderColor: "#eee", borderBottomWidth: 1 }}
     />
   );
 
@@ -94,7 +98,9 @@ function List({ navigation }: NativeStackScreenProps<RootStackParamList, "List">
   );
 }
 
-function Detail({ route }: NativeStackScreenProps<RootStackParamList, "Detail">) {
+function Detail({
+  route,
+}: NativeStackScreenProps<RootStackParamList, "Detail">) {
   const { data, loading } = useTokenData();
   const { id } = route.params;
 
@@ -123,20 +129,25 @@ function Detail({ route }: NativeStackScreenProps<RootStackParamList, "Detail">)
   );
 }
 
-const forSlide: StackCardStyleInterpolator = ({ current, next, inverted, layouts: { screen } }) => {
+const forSlide: StackCardStyleInterpolator = ({
+  current,
+  next,
+  inverted,
+  layouts: { screen },
+}) => {
   const progress = Animated.add(
     current.progress.interpolate({
       inputRange: [0, 1],
       outputRange: [0, 1],
-      extrapolate: 'clamp',
+      extrapolate: "clamp",
     }),
     next
       ? next.progress.interpolate({
           inputRange: [0, 1],
           outputRange: [0, 1],
-          extrapolate: 'clamp',
+          extrapolate: "clamp",
         })
-      : 0
+      : 0,
   );
 
   return {
@@ -151,9 +162,9 @@ const forSlide: StackCardStyleInterpolator = ({ current, next, inverted, layouts
                 0, // Fully focused
                 screen.width * -0.3, // Fully unfocused
               ],
-              extrapolate: 'clamp',
+              extrapolate: "clamp",
             }),
-            inverted
+            inverted,
           ),
         },
       ],
@@ -167,16 +178,17 @@ export const TokenListNavigator = () => {
       screenOptions={{
         animationEnabled: true,
         cardStyleInterpolator: forSlide,
-      }}>
+      }}
+    >
       <Stack.Screen
         name="List"
         component={List}
-        options={{ title: 'Token List' }}
+        options={{ title: "Token List" }}
       />
       <Stack.Screen
         name="Detail"
         component={Detail}
-        options={{ title: 'Token Detail' }}
+        options={{ title: "Token Detail" }}
       />
     </Stack.Navigator>
   );

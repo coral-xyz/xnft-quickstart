@@ -3,10 +3,12 @@ import { Connection, PublicKey } from "@solana/web3.js";
 import { Event, XnftMetadata } from "@coral-xyz/common-public";
 
 declare global {
-  interface Window { xnft: any; }
+  interface Window {
+    xnft: any;
+  }
 }
 
-export { useColorScheme } from 'react-native';
+export { useColorScheme } from "react-native";
 
 /*
  * @Depreciated over usePublicKeys
@@ -56,7 +58,7 @@ export function useSolanaConnection(): Connection {
 
 export function useEthereumConnection(): Connection {
   const [connection, setConnection] = useState(
-    window.xnft.ethereum?.connection
+    window.xnft.ethereum?.connection,
   );
   useEffect(() => {
     window.xnft.ethereum?.on("connectionUpdate", () => {
@@ -107,7 +109,7 @@ export function useDimensions(debounceMs = 0) {
     return function () {
       clearTimeout(timer);
       timer = setTimeout(() => {
-        clearTimeout(timer)
+        clearTimeout(timer);
         // @ts-ignore
         fn.apply(this, arguments);
       }, debounceMs);

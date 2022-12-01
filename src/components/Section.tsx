@@ -1,11 +1,10 @@
-import { ReactNode } from 'react';
-import { View, Text, StyleSheet } from 'react-native';
-
+import { ReactNode } from "react";
+import { View, Text, StyleSheet } from "react-native";
 
 type Props = {
-  title: string,
-  children: JSX.Element | JSX.Element[] | null
-}
+  title: string;
+  children: JSX.Element | JSX.Element[] | null;
+};
 
 export function Section({ title, children }: Props) {
   return (
@@ -21,7 +20,7 @@ const styles = StyleSheet.create({
     marginBottom: 16,
   },
   title: {
-    textAlign: 'center',
+    textAlign: "center",
   },
   example: {
     marginTop: 8,

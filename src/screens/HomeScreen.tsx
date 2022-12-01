@@ -1,19 +1,19 @@
-import { Text, FlatList } from 'react-native';
-import tw from 'twrnc';
+import { Text, FlatList } from "react-native";
+import tw from "twrnc";
 
-import { Screen } from '../components/Screen';
+import { Screen } from "../components/Screen";
 
 export function HomeScreen() {
   const features = [
-    'tailwind',
-    'recoil',
-    'native styling',
-    'fetching code from an API',
-    'using a FlatList to render data',
-    'Image for both remote & local images',
-    'custom fonts',
-    'sign a transaction / message',
-    'theme hook with light/dark support'
+    "tailwind",
+    "recoil",
+    "native styling",
+    "fetching code from an API",
+    "using a FlatList to render data",
+    "Image for both remote & local images",
+    "custom fonts",
+    "sign a transaction / message",
+    "theme hook with light/dark support",
   ];
 
   return (
@@ -29,4 +29,3 @@ export function HomeScreen() {
     </Screen>
   );
 }
-
