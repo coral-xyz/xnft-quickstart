@@ -38,7 +38,7 @@
     "recoil": "*",
     "twrnc": "*",
     "uuid": "*",
-    "xnft": "^0.2.0-latest.958"
+    "xnft": "*"
   },
   "devDependencies": {
     "@babel/core": "^7.12.9",
