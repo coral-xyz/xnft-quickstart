@@ -3,7 +3,11 @@ const fs = require("fs");
 
 module.exports = async function (env, argv) {
   const config = await createExpoWebpackConfigAsync(env, argv);
-  // Customize the config before returning it.
+
+  // keep everything the same for expo start
+  if(env.mode === "development") {
+    return config;
+  }
 
   config.output = {
     globalObject: 'this',

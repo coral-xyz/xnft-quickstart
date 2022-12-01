@@ -1,10 +1,9 @@
 {
   "main": "node_modules/expo/AppEntry.js",
   "scripts": {
-    "start": "expo start",
-    "android": "expo start --android",
-    "ios": "expo start --ios",
-    "web": "expo start --web"
+    "start": "xnft native start",
+    "build": "expo export:web",
+    "dev": "expo start --web & xnft dev --iframe http://localhost:19006"
   },
   "dependencies": {
     "@expo-google-fonts/dev": "*",
@@ -36,7 +35,8 @@
     "react-native-web": "~0.18.9",
     "recoil": "*",
     "twrnc": "*",
-    "uuid": "*"
+    "uuid": "*",
+    "xnft": "^0.2.0-latest.958"
   },
   "devDependencies": {
     "@babel/core": "^7.12.9",
