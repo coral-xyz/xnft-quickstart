@@ -30,7 +30,7 @@ export function ExamplesScreens() {
       </Section>
       <Section title="Local Image Import">
         <Image
-          source={require('../assets/icon.png')}
+          source={require('../../assets/icon.png')}
           style={{ width: 50, height: 50 }}
         />
         <LearnMoreLink url="https://reactnative.dev/docs/images#static-image-resources" />

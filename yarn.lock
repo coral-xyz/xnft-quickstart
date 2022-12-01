@@ -10833,15 +10833,10 @@ react-dom@18.1.0:
     loose-envify "^1.1.0"
     scheduler "^0.22.0"
 
-react-error-overlay@6.0.9:
+react-error-overlay@6.0.9, react-error-overlay@^6.0.9:
   version "6.0.9"
   resolved "https://registry.yarnpkg.com/react-error-overlay/-/react-error-overlay-6.0.9.tgz#3c743010c9359608c375ecd6bc76f35d93995b0a"
   integrity sha512-nQTTcUu+ATDbrSD1BZHr5kgSD4oF8OFjxun8uAaL8RwPBacGBNPf/yAuVVdx17N8XNzRDMrZ9XcKZHCjPW+9ew==
-
-react-error-overlay@^6.0.9:
-  version "6.0.11"
-  resolved "https://registry.yarnpkg.com/react-error-overlay/-/react-error-overlay-6.0.11.tgz#92835de5841c5cf08ba00ddd2d677b6d17ff9adb"
-  integrity sha512-/6UZ2qgEyH2aqzYZgQPxEnz33NJ2gNsnHA2o5+o4wW9bLM/JYQitNP9xPhsXwC08hMMovfGe/8retsdDsczPRg==
 
 react-freeze@^1.0.0:
   version "1.0.3"
@@ -13384,10 +13379,10 @@ xmlbuilder@~11.0.0:
   resolved "https://registry.yarnpkg.com/xmlbuilder/-/xmlbuilder-11.0.1.tgz#be9bae1c8a046e76b31127726347d0ad7002beb3"
   integrity sha512-fDlsI/kFEx7gLvbecc0/ohLG50fugQp8ryHzMTuW9vSa1GJ0XYWKnhsUx7oie3G98+r56aTQIUB4kht42R3JvA==
 
-xnft@^0.2.0-latest.958:
-  version "0.2.0-latest.958"
-  resolved "https://registry.yarnpkg.com/xnft/-/xnft-0.2.0-latest.958.tgz#725cd3c7469d58423b191eaf3ea1f78c97c2f058"
-  integrity sha512-L/9KmBXIz6IWjDN+x1kzmLUHU12Yaz86gryy4RZUta6aD9jPgK5K9OAP3xW7XhiRQXwWyjSSYxRqnrq4uGcdlQ==
+xnft@latest:
+  version "0.2.0-latest.971"
+  resolved "https://registry.yarnpkg.com/xnft/-/xnft-0.2.0-latest.971.tgz#a0ff930448fe7c0f8124e169d0893718127e39ae"
+  integrity sha512-K06VW1Y3TUjDsuxPg5eSMi9AJdOfaaatgnYXmcbibrgzc0Hb8MuOMD6bcv2jq/5qqOR+QHGNKblk71rMM39FrQ==
   dependencies:
     "@esbuild-plugins/node-globals-polyfill" "^0.1.1"
     "@parcel/config-default" "^2.7.0"
