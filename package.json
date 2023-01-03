@@ -5,6 +5,7 @@
     "bundle": "yarn build && npx xnft new bundle",
     "dev": "expo start --web & npx xnft new --iframe http://localhost:19006"
   },
+  "homepage": ".",
   "dependencies": {
     "@coral-xyz/common-public": "^0.2.0-latest.971",
     "@expo-google-fonts/dev": "*",

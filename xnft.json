@@ -9,10 +9,7 @@
   ],
   "entrypoints": {
     "default": {
-      "web": {
-        "index": "index.html",
-        "root": "dist"
-      }
+      "web": "dist/index.html"
     }
   }
 }
