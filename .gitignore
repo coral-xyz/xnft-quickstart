@@ -9,6 +9,8 @@ npm-debug.*
 *.mobileprovision
 *.orig.*
 web-build/
+.xnft-bundle/
+xnft-bundle.zip
 
 # macOS
 .DS_Store

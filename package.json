@@ -1,9 +1,9 @@
 {
-  "main": "node_modules/expo/AppEntry.js",
   "scripts": {
-    "start": "npx xnft native start",
     "build": "expo export:web",
-    "dev": "expo start --web & npx xnft dev --iframe http://localhost:19006"
+    "start": "yarn build && npx xnft new web",
+    "bundle": "yarn build && npx xnft new bundle",
+    "dev": "expo start --web & npx xnft new --iframe http://localhost:19006"
   },
   "dependencies": {
     "@coral-xyz/common-public": "^0.2.0-latest.971",
@@ -20,12 +20,17 @@
     "@react-navigation/native-stack": "6.6.1",
     "@react-navigation/stack": "6.2.1",
     "@solana/web3.js": "^1.67.2",
+    "commander": "^9.4.1",
     "expo": "~47.0.8",
     "expo-constants": "~14.0.2",
     "expo-linking": "~3.2.3",
     "expo-status-bar": "~1.4.2",
+    "fast-glob": "^3.2.12",
+    "glob": "^8.0.3",
+    "jszip": "^3.10.1",
     "react": "18.1.0",
     "react-dom": "18.1.0",
+    "react-error-overlay": "6.0.9",
     "react-native": "0.70.5",
     "react-native-gesture-handler": "~2.8.0",
     "react-native-pager-view": "6.0.1",
@@ -35,17 +40,16 @@
     "react-native-screens": "~3.18.0",
     "react-native-tab-view": "^3.0.0",
     "react-native-web": "~0.18.9",
-    "react-error-overlay": "6.0.9",
     "recoil": "*",
-    "twrnc": "*",
+    "twrnc": "*",    
     "uuid": "*"
   },
   "devDependencies": {
-    "xnft": "latest",
     "@babel/core": "^7.12.9",
     "@types/react": "~18.0.14",
     "@types/react-native": "~0.70.6",
-    "typescript": "^4.6.3"
+    "typescript": "^4.6.3",
+    "xnft": "latest"
   },
   "resolutions": {
     "react-error-overlay": "6.0.9"

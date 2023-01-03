@@ -1,0 +1,18 @@
+{
+  "name": "xNFT Quickstart",
+  "slug": "xnft-quickstart",
+  "description": "React Native Example",
+  "icon": "./relative/path/to/icon",
+  "screenshots": [
+    "./relative/path/to/screenshot1",
+    "./relative/path/to/screenshot2"
+  ],
+  "entrypoints": {
+    "default": {
+      "web": {
+        "index": "index.html",
+        "root": "dist"
+      }
+    }
+  }
+}
