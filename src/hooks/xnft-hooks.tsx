@@ -1,6 +1,6 @@
-import { useState, useEffect } from "react";
-import { Connection, PublicKey } from "@solana/web3.js";
 import { Event, XnftMetadata } from "@coral-xyz/common-public";
+import { Connection, PublicKey } from "@solana/web3.js";
+import { useEffect, useState } from "react";
 
 declare global {
   interface Window {
@@ -10,9 +10,7 @@ declare global {
 
 export { useColorScheme } from "react-native";
 
-/*
- * @Depreciated over usePublicKeys
- */
+/** @deprecated use `usePublicKeys()` instead */
 export function usePublicKey(): PublicKey {
   const [publicKey, setPublicKey] = useState(window.xnft.solana?.publicKey);
   useEffect(() => {
@@ -33,9 +31,7 @@ export function usePublicKeys(): PublicKey {
   return publicKeys;
 }
 
-/*
- * @Depreciated over individual connections
- */
+/** @deprecated use blockchain-specific connections instead */
 export function useConnection(): Connection {
   const [connection, setConnection] = useState(window.xnft.solana?.connection);
   useEffect(() => {
@@ -58,7 +54,7 @@ export function useSolanaConnection(): Connection {
 
 export function useEthereumConnection(): Connection {
   const [connection, setConnection] = useState(
-    window.xnft.ethereum?.connection,
+    window.xnft.ethereum?.connection
   );
   useEffect(() => {
     window.xnft.ethereum?.on("connectionUpdate", () => {
