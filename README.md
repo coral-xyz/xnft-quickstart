@@ -45,4 +45,4 @@ Test the newly created build in `dist/index.html` in the simulator:
 yarn start
 ```
 
-Once everything looks good head over to [xnft.gg]() to publish your xNFT!
+Once everything looks good head over to [xnft.gg](https://www.xnft.gg) to publish your xNFT!
