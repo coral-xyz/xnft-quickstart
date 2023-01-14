@@ -13,40 +13,266 @@ const testAtom = atom<"native" | "bright">({
 function LearnMoreLink({ url }: { url: string }) {
   return <Text onPress={() => Linking.openURL(url)}>Learn more</Text>;
 }
+import { AnchorProvider } from "@project-serum/anchor";
+
+import {
+  ORCA_WHIRLPOOL_PROGRAM_ID,
+  TickUtil,
+  PDAUtil,
+  PriceMath,
+  WhirlpoolIx,
+  decreaseLiquidityQuoteByLiquidityWithParams,
+  WhirlpoolContext,
+  AccountFetcher,
+  buildWhirlpoolClient,
+  increaseLiquidityQuoteByInputToken,
+  SwapUtils,
+  swapQuoteByInputToken,
+  decreaseLiquidityQuoteByLiquidity,
+  increaseLiquidityQuoteByInputTokenWithParams,
+  toTx,
+  collectFeesQuote,
+  collectRewardsQuote,
+} from "@orca-so/whirlpools-sdk";
+import {
+  AddressLookupTableProgram,
+  Keypair,
+  PublicKey,
+  sendAndConfirmTransaction,
+  SystemProgram,
+  Transaction,
+  TransactionMessage,
+  VersionedTransaction,
+} from "@solana/web3.js";
+import { Decimal } from "decimal.js";
+import { Percentage, deriveATA, MathUtil } from "@orca-so/common-sdk";
+import BN from "bn.js";
+import {
+  ASSOCIATED_TOKEN_PROGRAM_ID,
+  NATIVE_MINT,
+  TOKEN_PROGRAM_ID,
+  u64,
+} from "@solana/spl-token";
+import { bs58 } from "@project-serum/anchor/dist/cjs/utils/bytes";
+import { useConnection } from "../hooks/xnft-hooks";
+import { useState } from "react";
+import { TextInput } from "react-native-gesture-handler";
+
 
 export function ExamplesScreens() {
   const [future, setFuture] = useRecoilState(testAtom);
+  const connection = useConnection()
+  const [thepool, setThepool] = useState("BqnpCdDLPV2pFdAaLnVidmn3G93RP2p5oRdGEY2sJGez")
+  const [qty, setQty] = useState(1.38)
 
+  const amount = BigInt(100 * 10 ** 6);
+  const posOlds: any = {};
+  // 1000 * 0.0005 $5?
+  const provider = new AnchorProvider(connection, window.xnft?.solana, {})
+  const context = WhirlpoolContext.withProvider(
+    provider,
+    ORCA_WHIRLPOOL_PROGRAM_ID
+  );
+  setTimeout(async function () {
+  
+    const client = buildWhirlpoolClient(context);
+   
+    //let position = await client.getPosition(positionk);
+    let atas = await connection.getParsedTokenAccountsByOwner(
+      window.xnft?.solana.publicKey,
+      { programId: TOKEN_PROGRAM_ID }
+    );
+    let positions: any = [];
+    for (var ata of atas.value) {
+      try {
+        console.log(ata.account.data.parsed.info.mint);
+  
+        let maybe = await client.getPosition(
+          PDAUtil.getPosition(
+            ORCA_WHIRLPOOL_PROGRAM_ID,
+            new PublicKey(ata.account.data.parsed.info.mint)
+          ).publicKey
+        );
+        positions.push(maybe);
+        posOlds[ata.account.data.parsed.info.mint] = (
+          await maybe.getData()
+        ).rewardInfos;
+      } catch (err) {}
+    }
+    console.log(positions);
+    setInterval(async function () {
+      try {
+      let atas = await connection.getParsedTokenAccountsByOwner(
+        window.xnft?.solana.publicKey,
+        { programId: TOKEN_PROGRAM_ID }
+      );
+      let positions: any = [];
+  
+      const pool = await client.getPool(thepool
+      );
+      for (var ata of atas.value) {
+        try {
+          console.log(ata.account.data.parsed.info.mint);
+  
+          let maybe = await client.getPosition(
+            PDAUtil.getPosition(
+              ORCA_WHIRLPOOL_PROGRAM_ID,
+              new PublicKey(ata.account.data.parsed.info.mint)
+            ).publicKey
+          );
+          positions.push(maybe);
+          if (
+            (await maybe.getData()).rewardInfos ==
+            posOlds[ata.account.data.parsed.info.mint]
+          ) {
+            console.log("closeit!");
+            const tickArrayLower = PDAUtil.getTickArray(
+              context.program.programId,
+              pool.getAddress(),
+              (await maybe.getData()).tickLowerIndex
+            ).publicKey;
+            const tickArrayUpper = PDAUtil.getTickArray(
+              context.program.programId,
+              pool.getAddress(),
+              (await maybe.getData()).tickUpperIndex
+            ).publicKey;
+            await client.collectFeesAndRewardsForPositions([maybe.getAddress()])
+           
+            // Must manually call update_fee_and_rewards -> collect_fees -> collect_rewards
+            // Convienience function coming soon.
+            const txs = await pool.closePosition(
+              maybe.getAddress(),
+              Percentage.fromFraction(100, 100)
+            );
+            for (var t of txs) {
+              {
+                await t.buildAndExecute();
+              }
+            }
+          } else {
+            posOlds[ata.account.data.parsed.info.mint] = (
+              await maybe.getData()
+            ).rewardInfos;
+          }
+        } catch (err) {
+          console.log(err);
+        }
+      }
+      for (var i = 0; i < 5; i++){
+      const poolData = await pool.getData();
+      const poolTokenAInfo = pool.getTokenAInfo();
+      const poolTokenBInfo = pool.getTokenBInfo();
+  
+      // Derive the tick-indices based on a human-readable price
+      const tokenADecimal = poolTokenAInfo.decimals;
+      const tokenBDecimal = poolTokenBInfo.decimals;
+      // @ts-ignore
+      const whirlpoolPda = PDAUtil.getWhirlpool(
+        ORCA_WHIRLPOOL_PROGRAM_ID,
+        pool.getAddress(),
+        poolData.tokenMintA,
+        poolData.tokenMintB,
+  
+        // @ts-ignore
+        poolData.tickSpacing
+      );
+      // Derive the Whirlpool address
+  
+      const positionMintKeypair = Keypair.generate();
+      const positionPda = PDAUtil.getPosition(
+        ORCA_WHIRLPOOL_PROGRAM_ID,
+        positionMintKeypair.publicKey
+      );
+      const metadataPda = PDAUtil.getPositionMetadata(
+        positionMintKeypair.publicKey
+      );
+      const positionTokenAccountAddress = await deriveATA(
+        window.xnft?.solana.publicKey,
+        positionMintKeypair.publicKey
+      );
+      /*
+  
+   await( toTx(context, WhirlpoolIx.openPositionWithMetadataIx(context.program, {
+      funder: window.xnft?.solana.publicKey,
+      positionPda,
+      metadataPda,
+      positionMintAddress: positionMintKeypair.publicKey,
+      positionTokenAccount: positionTokenAccountAddress,
+      whirlpool: pool.getAddress(),
+      owner: window.xnft?.solana.publicKey,
+      tickLowerIndex: poolData.tickCurrentIndex-poolData.tickSpacing,
+      tickUpperIndex: poolData.tickCurrentIndex+poolData.tickSpacing,
+    })).addSigner(positionMintKeypair).buildAndExecute());
+  */
+      // Get a quote on the estimated liquidity and tokenIn (50 tokenA)
+      //let positionData = await position.getData()
+      //if
+      console.log(poolData.tickSpacing);
+      console.log(poolData.tickCurrentIndex);
+  
+      const tickLower = TickUtil.getInitializableTickIndex(
+        poolData.tickCurrentIndex -
+          Math.floor(Math.random() * 8) * poolData.tickSpacing, // @ts-ignore
+        poolData.tickSpacing
+      );
+      const tickUpper = TickUtil.getInitializableTickIndex(
+        poolData.tickCurrentIndex +
+          Math.floor(Math.random() * 8) * poolData.tickSpacing, // @ts-ignore
+        poolData.tickSpacing
+      );
+      console.log(poolTokenAInfo.mint.toBase58());
+  
+      const quote = increaseLiquidityQuoteByInputTokenWithParams({
+        inputTokenAmount: new u64(qty * 10 ** tokenBDecimal),
+        inputTokenMint: poolData.tokenMintB,
+  
+        tokenMintA: poolData.tokenMintA,
+        tokenMintB: poolData.tokenMintB,
+        tickCurrentIndex: poolData.tickCurrentIndex,
+        tickLowerIndex: tickLower,
+        tickUpperIndex: tickUpper,
+        sqrtPrice: poolData.sqrtPrice,
+        slippageTolerance: Percentage.fromFraction(100, 100),
+      });
+      // Evaluate the quote if you need
+      const { tokenMaxA, tokenMaxB } = quote;
+  
+      // Construct the open position & increase_liquidity ix and execute the transaction.
+      const { positionMint, tx } = await pool.openPosition(
+        tickLower,
+        tickUpper,
+        quote
+      );
+      //thePosition = positionMint
+  
+      const txId = await tx.buildAndExecute();
+  
+      console.log(txId)
+      // Fetch the newly created position with liquidity
+      const position = await client.getPosition(
+        PDAUtil.getPosition(ORCA_WHIRLPOOL_PROGRAM_ID, positionMint).publicKey
+      );
+      console.log(position.getAddress().toBase58());
+      }
+    } catch( er ){
+      
+    console.log(er)
+    }
+    }, 20000);
+  });
   return (
     <Screen>
-      <Section title="Recoil">
-        <Button
-          title={`The Future is ${future}`}
-          color={
-            future === "bright" ? "rgb(228, 208, 10)" : "rgb(33, 150, 243)"
-          }
-          onPress={() => setFuture(future === "bright" ? "native" : "bright")}
+      <Section title="Set your Orca.so whirlpool...">
+        <TextInput
+          onChange={(e: any) => setThepool(e.target.value)}
+          value={thepool}
         />
       </Section>
-      <Section title="Local Image Import">
-        <Image
-          source={require("../../assets/icon.png")}
-          style={{ width: 50, height: 50 }}
+      <Section title="qty to trade...(rough)">
+        <TextInput
+          onChange={(e: any) => setQty(parseFloat(e.target.value))}
+          value={qty.toString()}
         />
-        <LearnMoreLink url="https://reactnative.dev/docs/images#static-image-resources" />
-      </Section>
-      <Section title="Custom Font">
-        <Text style={{ fontFamily: "Inter_900Black" }}>
-          Inter 900 Black Font
-        </Text>
-        <LearnMoreLink url="https://docs.expo.dev/guides/using-custom-fonts/#using-a-google-font" />
-      </Section>
-      <Section title="Opening a URL">
-        <Button
-          onPress={() => Linking.openURL("https://xnft.gg")}
-          title="Open xNFT.gg"
-        />
-        <LearnMoreLink url="https://docs.expo.dev/versions/latest/sdk/linking/#linkingopenurlurl" />
       </Section>
     </Screen>
   );

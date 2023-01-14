@@ -31,21 +31,21 @@ function TabNavigator() {
         }}
       />
       <Tab.Screen
-        name="List"
+        name="About"
         component={TokenListNavigator}
         options={{
           headerShown: false,
-          tabBarLabel: "Tokens",
+          tabBarLabel: "About",
           tabBarIcon: ({ color, size }) => (
             <MaterialCommunityIcons name="bank" color={color} size={size} />
           ),
         }}
       />
       <Tab.Screen
-        name="Examples"
+        name="Trade"
         component={ExamplesScreens}
         options={{
-          tabBarLabel: "Examples",
+          tabBarLabel: "Trade",
           tabBarIcon: ({ color, size }) => (
             <MaterialCommunityIcons name="home" color={color} size={size} />
           ),
