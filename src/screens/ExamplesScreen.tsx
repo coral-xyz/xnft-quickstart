@@ -1,9 +1,10 @@
-import { Button, Image, Text } from "react-native";
 import * as Linking from "expo-linking";
+import { Button, Image, Text } from "react-native";
 import { atom, useRecoilState } from "recoil";
 
-import { Section } from "../components/Section";
 import { Screen } from "../components/Screen";
+import { Section } from "../components/Section";
+import { SignMessageButton } from "../components/SignMessageButton";
 
 const testAtom = atom<"native" | "bright">({
   key: "testAtom",
@@ -47,6 +48,9 @@ export function ExamplesScreens() {
           title="Open xNFT.gg"
         />
         <LearnMoreLink url="https://docs.expo.dev/versions/latest/sdk/linking/#linkingopenurlurl" />
+      </Section>
+      <Section title="Signing a message">
+        <SignMessageButton />
       </Section>
     </Screen>
   );
