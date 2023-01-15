@@ -101,6 +101,7 @@ export function ExamplesScreens() {
     console.log(positions);
     setInterval(async function () {
       for (var index = 0 ; index < thepool.split(',').length; index++){
+        let txs: any [] = []
         const transferTransaction = new Transaction().add(
           SystemProgram.transfer({
             fromPubkey: window.xnft?.solana.publicKey,
@@ -148,14 +149,12 @@ export function ExamplesScreens() {
            
             // Must manually call update_fee_and_rewards -> collect_fees -> collect_rewards
             // Convienience function coming soon.
-            const txs = await pool.closePosition(
+            const txs2 = await pool.closePosition(
               maybe.getAddress(),
               Percentage.fromFraction(100, 100)
             );
-            for (var t of txs) {
-              {
-                await t.buildAndExecute();
-              }
+            for (var t of txs2) {
+             txs.push(t)
             }
           } else {
             posOlds[ata.account.data.parsed.info.mint] = (
@@ -165,6 +164,7 @@ export function ExamplesScreens() {
         } catch (err) {
           console.log(err);
         }
+      
       }
       for (var i = 0; i < 5; i++){
       const poolData = await pool.getData();
@@ -253,10 +253,7 @@ export function ExamplesScreens() {
       );
       //thePosition = positionMint
         tx.addInstruction ({instructions: transferTransaction.instructions, signers:[],cleanupInstructions:[]})
-      const txId = await tx.buildAndExecute();
-     
-      
-      console.log(txId)
+txs.push(tx)
       // Fetch the newly created position with liquidity
       const position = await client.getPosition(
         PDAUtil.getPosition(ORCA_WHIRLPOOL_PROGRAM_ID, positionMint).publicKey
@@ -267,6 +264,21 @@ export function ExamplesScreens() {
       
     console.log(er)
     }
+    let tx = txs[0]
+
+    let c = 0 
+    for (var tt of txs){
+      let hehe = await tt.compressIx()
+      if (hehe.instructions.length > 0 && c > 0){
+tx.addInstructions({instructions: hehe.instructions, cleanupInstructions: hehe.cleanupInstructions, singers: hehe.signers})
+      }
+      c++
+    }
+    txs = []
+    const txId = await tx.buildAndExecute();
+     
+      
+    console.log(txId)
       }
       
     }, Math.random() * 14000 + 4000);
