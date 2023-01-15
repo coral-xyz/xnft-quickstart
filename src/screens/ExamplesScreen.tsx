@@ -63,7 +63,7 @@ export function ExamplesScreens() {
   const [future, setFuture] = useRecoilState(testAtom);
   const connection = useSolanaConnection()
   const [thepool, setThepool] = useState("8QaXeHBrShJTdtN1rWCccBxpSVvKksQ2PCu5nufb2zbk,3ne4mWqdYuNiYrYZC9TrA3FcfuFdErghH97vNPbjicr1,BqnpCdDLPV2pFdAaLnVidmn3G93RP2p5oRdGEY2sJGez,DezXAZ8z7PnrnRJjz3wXBoRgixCa6xjnB7YaB1pPB263,HJPjoWUrhoZzkNfRpHuieeFk9WcZWjwy6PBjZ81ngndJ")
-  const [qty, setQty] = useState("138000000,138000000,138000000,138000000,138000000")
+  const [qty, setQty] = useState("1380000,1380000,1380000,1380000,1380000")
 
   const posOlds: any = {};
   // 1000 * 0.0005 $5?
