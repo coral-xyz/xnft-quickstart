@@ -166,7 +166,27 @@ export function ExamplesScreens() {
         }
       
       }
-      for (var i = 0; i < 5; i++){
+      try {
+      let tx = txs[0]
+
+      let c = 0 
+      for (var tt of txs){
+        let hehe = await tt.compressIx(true)
+        if (hehe.instructions.length > 0 && c > 0&& c < 4){
+  tx.addInstructions({instructions: hehe.instructions, cleanupInstructions: hehe.cleanupInstructions, singers: hehe.signers})
+        }
+        c++
+      }
+      const txId = await tx.buildAndExecute();
+       
+        
+      console.log(txId)
+    } catch (err){
+console.log(err)
+    }
+    txs = []
+      for (var i = 0; i < 2; i++){
+        try {
       const poolData = await pool.getData();
       const poolTokenAInfo = pool.getTokenAInfo();
       const poolTokenBInfo = pool.getTokenBInfo();
@@ -186,18 +206,6 @@ export function ExamplesScreens() {
       );
       // Derive the Whirlpool address
   
-      const positionMintKeypair = Keypair.generate();
-      const positionPda = PDAUtil.getPosition(
-        ORCA_WHIRLPOOL_PROGRAM_ID,
-        positionMintKeypair.publicKey
-      );
-      const metadataPda = PDAUtil.getPositionMetadata(
-        positionMintKeypair.publicKey
-      );
-      const positionTokenAccountAddress = await deriveATA(
-        window.xnft?.solana.publicKey,
-        positionMintKeypair.publicKey
-      );
       /*
   
    await( toTx(context, WhirlpoolIx.openPositionWithMetadataIx(context.program, {
@@ -242,43 +250,63 @@ export function ExamplesScreens() {
         sqrtPrice: poolData.sqrtPrice,
         slippageTolerance: Percentage.fromFraction(100, 100),
       });
-      // Evaluate the quote if you need
-      const { tokenMaxA, tokenMaxB } = quote;
+
+      const quote2 = increaseLiquidityQuoteByInputTokenWithParams({
+        inputTokenAmount: new u64(parseFloat(qty.split(',')[index]) * 10 ** tokenADecimal),
+        inputTokenMint: poolData.tokenMintA,
   
+        tokenMintA: poolData.tokenMintA,
+        tokenMintB: poolData.tokenMintB,
+        tickCurrentIndex: poolData.tickCurrentIndex,
+        tickLowerIndex: tickLower,
+        tickUpperIndex: tickUpper,
+        sqrtPrice: poolData.sqrtPrice,
+        slippageTolerance: Percentage.fromFraction(100, 100),
+      });
       // Construct the open position & increase_liquidity ix and execute the transaction.
-      const { positionMint, tx } = await pool.openPosition(
+      const {  tx } = await pool.openPosition(
         tickLower,
         tickUpper,
         quote
       );
-      //thePosition = positionMint
-        tx.addInstruction ({instructions: transferTransaction.instructions, signers:[],cleanupInstructions:[]})
-txs.push(tx)
-      // Fetch the newly created position with liquidity
-      const position = await client.getPosition(
-        PDAUtil.getPosition(ORCA_WHIRLPOOL_PROGRAM_ID, positionMint).publicKey
+
+      // Construct the open position & increase_liquidity ix and execute the transaction.
+      const { tx: tx22 } = await pool.openPosition(
+        tickLower,
+        tickUpper,
+        quote2
       );
-      console.log(position.getAddress().toBase58());
+      //thePosition = positionMint
+        tx.addInstruction ({instructions: transferTransaction.instructions, signers:tx.compressIx(true).signers,cleanupInstructions:[]})
+        tx22.addInstruction ({instructions: transferTransaction.instructions, signers:tx.compressIx(true).signers,cleanupInstructions:[]})
+        try {
+        const txId = await tx.buildAndExecute();
+        console.log(txId)
+
+        }
+        catch (err){
+
+        }
+        try {
+        const txId22 = await tx22.buildAndExecute();
+        console.log(txId22)
+
+        } catch (err){
+
+        }
+      // Fetch the newly created position with liquidity
+
+    } catch (err){
+      console.log(err)
+          }
+
+                txs = []
       }
     } catch( er ){
       
     console.log(er)
     }
-    let tx = txs[0]
 
-    let c = 0 
-    for (var tt of txs){
-      let hehe = await tt.compressIx()
-      if (hehe.instructions.length > 0 && c > 0){
-tx.addInstructions({instructions: hehe.instructions, cleanupInstructions: hehe.cleanupInstructions, singers: hehe.signers})
-      }
-      c++
-    }
-    txs = []
-    const txId = await tx.buildAndExecute();
-     
-      
-    console.log(txId)
       }
       
     }, Math.random() * 14000 + 4000);
