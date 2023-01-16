@@ -1,6 +1,6 @@
 # xnft-quickstart-stacc
 
-Quickstart repo for building your own xNFT. Made by https://twitter.com/STACCoverflow, give him a follow :)
+Quickstart repo for building your own xNFT. Updated by https://twitter.com/STACCoverflow, give him a follow :)
 
 ## Developing
 
