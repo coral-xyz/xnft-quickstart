@@ -1,13 +1,14 @@
 import React from "react";
-import { Text } from "react-native";
-import tw from "twrnc";
+import { Text, View } from "react-native";
 
 import { Screen } from "../components/Screen";
 
 export function HomeScreen() {
   return (
     <Screen>
-      <Text style={tw`mb-4`}>Hello World, from Hxro :) </Text>
+      <View>
+        <Text>{'Hello world, this was made with <3 by Hxro :)'}</Text>
+      </View>
     </Screen>
   );
 }
