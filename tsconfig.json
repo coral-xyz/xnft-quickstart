@@ -1,7 +1,31 @@
 {
-  "extends": "expo/tsconfig.base",
+  "$schema": "https://json.schemastore.org/tsconfig",
+  "display": "Expo",
   "compilerOptions": {
-    "jsx": "react",
-    "strict": true
-  }
+    "allowJs": true,
+    "esModuleInterop": true,
+    "target": "ES2016",
+    "module": "CommonJS",
+    "sourceMap": true,
+    "jsx": "react-native",
+    "lib": [
+      "DOM",
+    ],
+    "moduleResolution": "node",
+    "noEmit": true,
+    
+    "resolveJsonModule": true,
+    "skipLibCheck": true,
+  },
+  "exclude": [
+    "node_modules",
+    "babel.config.js",
+    "metro.config.js",
+    "jest.config.js",
+    "src/react",
+    "src/wallet-adapter",
+    "src/spl-token",
+    "client"
+  ],
+  "extends": "expo/tsconfig.base"
 }

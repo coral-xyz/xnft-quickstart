@@ -1,13 +1,8 @@
 const createExpoWebpackConfigAsync = require('@expo/webpack-config');
 const fs = require("fs");
-
+const path = require('path')
 module.exports = async function (env, argv) {
   const config = await createExpoWebpackConfigAsync(env, argv);
-
-  // keep everything the same for expo start
-  if(env.mode === "development") {
-    return config;
-  }
 
   config.output = {
     globalObject: 'this',
@@ -33,7 +28,17 @@ module.exports = async function (env, argv) {
       filename: "index.html"
     })
   );
+  config.module.rules.push({
+    test: /\.mjs$/,
+    include: /node_modules/,
+    type: "javascript/auto",
+  });
 
+  config.module.rules.push({
+    test: /\.ts$/,
+    include: /node_modules/,
+    type: "javascript/auto",
+  });
 
   // this is brittle but works for now.
   const loaders = config.module.rules.find(rule => typeof rule.oneOf !== "undefined");
@@ -47,7 +52,7 @@ module.exports = async function (env, argv) {
 };
 
 // const logger = console.log.bind(console);
-
+ 
 class InlineJSPlugin {
   constructor({ template, filename }) {
     this.options = {
