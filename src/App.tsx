@@ -1,6 +1,7 @@
 import React from "react";
 
 import '../src/components/bufferFill'
+import { Providers } from "./components/Providers";
 
 import { registerRootComponent } from "expo";
 import { RecoilRoot } from "recoil";
@@ -15,6 +16,7 @@ const Tab = createBottomTabNavigator();
 
 function TabNavigator() {
   return (
+    <Providers>
     <Tab.Navigator
       initialRouteName="Play"
       screenOptions={{
@@ -43,6 +45,7 @@ function TabNavigator() {
         }}
       />
     </Tab.Navigator>
+    </Providers>
   );
 }
 

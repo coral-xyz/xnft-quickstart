@@ -1179,7 +1179,6 @@ async function fix() {
   return (
     <Screen style={tw`mb-4`}>
       <Text  style={{color:'red', margin: "10%", fontSize:18}}>Hello World, from Stacc - :) </Text>
-      <LearnMoreLink  url="http://localhost:3000" />
       <Text style={{margin:15, color:bal1col}}  >Your wager?</Text>
      <TextInput value={(bet / 10 ** 2).toString() } onChange={(v: any) => setBet(Math.floor(v.target.value) * 10 ** 2)} ></TextInput>
      

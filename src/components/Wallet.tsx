@@ -1,41 +1,46 @@
 import React, {  useMemo } from "react";
-import './bufferFill'
 import {
   ConnectionProvider,
   WalletProvider,
-} from "@solana/wallet-adapter-react";
-import { WalletModalProvider } from '@solana/wallet-adapter-react-ui'
-import {
-  PhantomWalletAdapter,
-} from "@solana/wallet-adapter-phantom";
+} from "wallet-adapter-react-xnft/lib/cjs";
+import { WalletAdapterNetwork } from '@solana/wallet-adapter-base';
+
+import './bufferFill'
 
 export const DEFAULT_ENDPOINT =
-  process.env.NEXT_PUBLIC_SOLANA_URL || "https://solana-mainnet.g.alchemy.com/v2/WM_Gl7ktiws7icLQVxLP5iVHNQTv8RNk";
+  window.xnft?.solana.connection?.rpcEndpoint || "https://rpc.helius.xyz/?api-key=6b1ccd35-ba2d-472a-8f54-9ac2c3c40b8b";
 
-  const network = 'mainnet-beta'
 
 // Default styles that can be overridden by your app
 
 export const Wallet = ({ children }) => {
-  const endpoint = window.xnft?.connection.rpcEndpoint;
+ // The network can be set to 'devnet', 'testnet', or 'mainnet-beta'.
+ const network = WalletAdapterNetwork.Mainnet;
 
-  // @solana/wallet-adapter-wallets includes all the adapters but supports tree shaking and lazy loading --
-  // Only the wallets you configure here will be compiled into your application, and only the dependencies
-  // of wallets that your users connect to will be loaded
-  // Only the wallets you configure here will be compiled into your application
-  const wallets = useMemo(
-    () => [
-      new PhantomWalletAdapter(),
-     
-    ],
-    [network]
-  );
+ const wallets = useMemo(
+     () => [
+         /**
+          * Wallets that implement either of these standards will be available automatically.
+          *
+          *   - Solana Mobile Stack Mobile Wallet Adapter Protocol
+          *     (https://github.com/solana-mobile/mobile-wallet-adapter)
+          *   - Solana Wallet Standard
+          *     (https://github.com/solana-labs/wallet-standard)
+          *
+          * If you wish to support a wallet that supports neither of those standards,
+          * instantiate its legacy wallet adapter here. Common legacy adapters can be found
+          * in the npm package `@solana/wallet-adapter-wallets`.
+          */
+     ],
+     // eslint-disable-next-line react-hooks/exhaustive-deps
+     [network]
+ );
 
   return (
-    <ConnectionProvider endpoint={endpoint}>
-      <WalletProvider wallets={wallets} autoConnect ><WalletModalProvider>
-        {children}</WalletModalProvider>
-      </WalletProvider>
-    </ConnectionProvider>
+    <ConnectionProvider endpoint={DEFAULT_ENDPOINT}>
+      <WalletProvider wallets={[window.xnft?.solana]} autoConnect >
+        {children}
+        </WalletProvider>
+        </ConnectionProvider>
   );
 };

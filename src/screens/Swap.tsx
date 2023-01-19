@@ -1,15 +1,24 @@
 
-import React from "react";
-import SwapDisplay from '../components/Swapidoodle';
-import "../components/bufferFill";
-import { Providers } from "../components/Providers";
+import React from "react";  
+import Iframe from 'react-iframe'
 
+import "../components/bufferFill";
+import { useReady } from '../hooks/xnft-hooks';
 const Home = () => {
+  const ready = useReady()
   return (
-    <Providers>
-       <SwapDisplay name={"BONKers"} image={"https://raw.githubusercontent.com/solana-labs/token-list/main/assets/mainnet/6dhTynDkYsVM7cbF7TKfC9DWB636TcEM935fq7JzL2ES/logo.png"} description={"Loco hombre..."} />
-       </Providers>
-  );
+    <div>
+  <Iframe url="https://strata123.vercel.app//swap/4Vyh36V9dYQdqUtxWc2nEzvezLjKn5qW5rPWACo8wddF"
+        width="100%"
+        height="800px"
+        id=""
+        sandbox={["allow-forms", "allow-scripts", "allow-same-origin"]}
+        className=""
+        display="block"
+        position="relative"/>
+
+               </div>
+  )
 };
 
 export default Home;

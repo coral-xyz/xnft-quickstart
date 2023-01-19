@@ -19,7 +19,7 @@ export const defaultRpcForCluster = (
     case "mainnet-beta":
       return "https://solana-mainnet.g.alchemy.com/v2/WM_Gl7ktiws7icLQVxLP5iVHNQTv8RNk";
     case "devnet":
-      return "https://api.devnet.solana.com";
+      return "https://rpc.helius.xyz/?api-key=6b1ccd35-ba2d-472a-8f54-9ac2c3c40b8b";
     case "localnet":
       return "http://localhost:8899";
     default:
