@@ -1137,9 +1137,9 @@
     buffer-layout "^1.2.0"
 
 "@coral-xyz/common-public@^0.2.0-latest.1931":
-  version "0.2.0-latest.2845"
-  resolved "https://registry.yarnpkg.com/@coral-xyz/common-public/-/common-public-0.2.0-latest.2845.tgz#1e96b84784438869e75a0a609f120e2cc07540f5"
-  integrity sha512-rt0FeFKFzXnk5LO8XQOX1tgnhZVPrFYuZuLfbfnbhuTys94j1a8z4cxUxOKuMw2DDBldOUSpvt8Qx/JvxDHwsA==
+  version "0.2.0-latest.2873"
+  resolved "https://registry.yarnpkg.com/@coral-xyz/common-public/-/common-public-0.2.0-latest.2873.tgz#d7f2d0bfe99054d4f672c85f7b9f18c371dfbfd5"
+  integrity sha512-kVFaYA7ocPRsKk1HU4aIjdzwTWWlyWlUMdPuX5zgm/J9rVNNn7aMuW4bbe1Jfjke+IxRrIEMqwFiWwe/KDZ+lQ==
   dependencies:
     react "^18.2.0"
     uuid "^8.3.2"
@@ -14729,9 +14729,9 @@ xmlbuilder@~11.0.0:
   integrity sha512-fDlsI/kFEx7gLvbecc0/ohLG50fugQp8ryHzMTuW9vSa1GJ0XYWKnhsUx7oie3G98+r56aTQIUB4kht42R3JvA==
 
 xnft@latest:
-  version "0.2.0-latest.2845"
-  resolved "https://registry.yarnpkg.com/xnft/-/xnft-0.2.0-latest.2845.tgz#8658eba0d4853de96deb378744e4cf4c79ffec01"
-  integrity sha512-KYqx9t1CXAnBFTa/TPvFjHxLOLbFk/qj+SeXdyKzv9M3YIF8oFRwTfK/Y1VPw4xaSRimdQj5nBPMuaJ3MtGGoA==
+  version "0.2.0-latest.2873"
+  resolved "https://registry.yarnpkg.com/xnft/-/xnft-0.2.0-latest.2873.tgz#ff6a3b510587c8809d4b9b823252fb670a8dfc8d"
+  integrity sha512-EO4hMMZwe1bDcTCeWoCtPZ8lu8DGVOxhKJVOPC9WmX5RcGXfRvZNJEYV5DnMC7xVExxP6p4JRXn6Dql4uv8rJw==
   dependencies:
     "@coral-xyz/xnft" "^0.2.29"
     "@esbuild-plugins/node-globals-polyfill" "^0.1.1"
