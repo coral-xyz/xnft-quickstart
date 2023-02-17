@@ -1,31 +1,31 @@
 {
+  "name": "xnft-quickstart",
+  "version": "1.0.0",
+  "main": "node_modules/expo/AppEntry.js",
   "scripts": {
-    "build": "expo export:web",
-    "start": "yarn build && npx xnft web",
-    "bundle": "yarn build && npx xnft bundle",
-    "dev": "expo start --web & npx xnft --iframe http://localhost:19006"
+    "start": "expo start",
+    "android": "expo start --android",
+    "ios": "expo start --ios",
+    "web": "expo start --web"
   },
-  "homepage": ".",
   "dependencies": {
     "@coral-xyz/common-public": "^0.2.0-latest.1931",
-    "@expo-google-fonts/dev": "*",
+    "@expo-google-fonts/dev": "^0.2.2",
     "@expo/vector-icons": "^13.0.0",
+    "@metaplex-foundation/js": "^0.18.1",
+    "@project-serum/anchor": "^0.26.0",
     "@react-navigation/bottom-tabs": "6.3.1",
     "@react-navigation/native": "6.0.10",
     "@react-navigation/native-stack": "6.6.1",
     "@react-navigation/stack": "6.2.1",
-    "@solana/web3.js": "^1.73.0",
-    "commander": "^9.4.1",
+    "@solana/spl-token": "^0.3.7",
+    "@solana/web3.js": "^1.73.2",
     "expo": "~47.0.8",
     "expo-constants": "~14.0.2",
     "expo-linking": "~3.3.0",
     "expo-status-bar": "~1.4.2",
-    "fast-glob": "^3.2.12",
-    "glob": "^8.0.3",
-    "jszip": "^3.10.1",
     "react": "18.1.0",
     "react-dom": "18.1.0",
-    "react-error-overlay": "6.0.9",
     "react-native": "0.70.5",
     "react-native-gesture-handler": "~2.8.0",
     "react-native-safe-area-context": "4.4.1",
@@ -36,18 +36,14 @@
     "uuid": "*"
   },
   "devDependencies": {
-    "typescript": "^4.6.3",
     "@babel/core": "^7.20.12",
     "@expo/webpack-config": "^0.17.2",
     "@types/react": "~18.0.26",
     "@types/react-native": "~0.71.0",
-    "xnft": ">0.2.0-latest.2873"
-  },
-  "resolutions": {
-    "react-error-overlay": "6.0.9"
+    "typescript": "^4.9.5"
   },
   "private": true,
   "engines": {
-    "node": "<17"
+    "node": "^16.18"
   }
 }
