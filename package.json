@@ -41,7 +41,7 @@
     "@expo/webpack-config": "^0.17.2",
     "@types/react": "~18.0.26",
     "@types/react-native": "~0.71.0",
-    "xnft": ">0.2.0-latest.2873"
+    "xnft": "latest"
   },
   "resolutions": {
     "react-error-overlay": "6.0.9"
