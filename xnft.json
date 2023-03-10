@@ -7,6 +7,9 @@
   "icon": {
     "md": "./assets/icon.png"
   },
+  "contact": {
+    "repository": ""
+  },
   "screenshots": [
     "./assets/screenShot.png"
   ],
