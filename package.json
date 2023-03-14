@@ -1,13 +1,14 @@
 {
+  "private": true,
+  "homepage": ".",
   "scripts": {
     "build": "expo export:web",
     "start": "yarn build && npx xnft web",
     "bundle": "yarn build && npx xnft bundle",
     "dev": "expo start --web & npx xnft --iframe http://localhost:19006"
   },
-  "homepage": ".",
   "dependencies": {
-    "@coral-xyz/common-public": "^0.2.0-latest.1931",
+    "@coral-xyz/common-public": "^0.2.0-latest.3375",
     "@expo-google-fonts/dev": "*",
     "@expo/vector-icons": "^13.0.0",
     "@react-navigation/bottom-tabs": "6.3.1",
@@ -16,38 +17,34 @@
     "@react-navigation/stack": "6.2.1",
     "@solana/web3.js": "^1.73.0",
     "commander": "^9.4.1",
-    "expo": "~47.0.8",
-    "expo-constants": "~14.0.2",
-    "expo-linking": "~3.3.0",
-    "expo-status-bar": "~1.4.2",
+    "expo": "~48.0.7",
+    "expo-constants": "~14.2.1",
+    "expo-linking": "~4.0.1",
+    "expo-status-bar": "~1.4.4",
     "fast-glob": "^3.2.12",
     "glob": "^8.0.3",
     "jszip": "^3.10.1",
-    "react": "18.1.0",
-    "react-dom": "18.1.0",
-    "react-error-overlay": "6.0.9",
-    "react-native": "0.70.5",
-    "react-native-gesture-handler": "~2.8.0",
-    "react-native-safe-area-context": "4.4.1",
-    "react-native-screens": "~3.18.0",
-    "react-native-web": "~0.18.9",
+    "react": "18.2.0",
+    "react-dom": "18.2.0",
+    "react-error-overlay": "6.0.11",
+    "react-native": "0.71.3",
+    "react-native-gesture-handler": "~2.9.0",
+    "react-native-safe-area-context": "4.5.0",
+    "react-native-screens": "~3.20.0",
+    "react-native-web": "~0.18.12",
     "recoil": "*",
     "twrnc": "*",
     "uuid": "*"
   },
   "devDependencies": {
-    "typescript": "^4.6.3",
-    "@babel/core": "^7.20.12",
-    "@expo/webpack-config": "^0.17.2",
-    "@types/react": "~18.0.26",
-    "@types/react-native": "~0.71.0",
+    "@babel/core": "^7.21.3",
+    "@expo/webpack-config": "^18.0.1",
+    "@types/react": "~18.0.28",
+    "@types/react-native": "~0.71.3",
+    "typescript": "^4.9.5",
     "xnft": "latest"
   },
   "resolutions": {
-    "react-error-overlay": "6.0.9"
-  },
-  "private": true,
-  "engines": {
-    "node": "<17"
+    "react-error-overlay": "6.0.11"
   }
 }
