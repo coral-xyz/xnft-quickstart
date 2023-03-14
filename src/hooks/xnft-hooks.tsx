@@ -21,8 +21,8 @@ export function usePublicKey(): PublicKey {
   return publicKey;
 }
 
-export function usePublicKeys(): PublicKey {
-  const [publicKeys, setPublicKeys] = useState(window.xnft.publicKeys);
+export function usePublicKeys(): { [blockchain: string]: string } {
+  const [publicKeys, setPublicKeys] = useState(window.xnft?.publicKeys);
   useEffect(() => {
     window.xnft.on("publicKeysUpdate", () => {
       setPublicKeys(window.xnft.publicKeys);
