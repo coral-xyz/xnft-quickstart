@@ -11,56 +11,74 @@ declare global {
 export { useColorScheme } from "react-native";
 
 /** @deprecated use `usePublicKeys()` instead */
-export function usePublicKey(): PublicKey {
-  const [publicKey, setPublicKey] = useState(window.xnft.solana?.publicKey);
+export function usePublicKey(): PublicKey | undefined {
+  const didLaunch = useDidLaunch()
+  const [publicKey, setPublicKey] = useState();
   useEffect(() => {
-    window.xnft.solana?.on("publicKeyUpdate", () => {
+    if (didLaunch) {
+      window.xnft.solana.on("publicKeyUpdate", () => {
+        setPublicKey(window.xnft.solana.publicKey);
+      });
       setPublicKey(window.xnft.solana.publicKey);
-    });
-  }, [setPublicKey]);
+    }
+  }, [didLaunch, setPublicKey]);
   return publicKey;
 }
 
-export function usePublicKeys(): { [blockchain: string]: string } {
-  const [publicKeys, setPublicKeys] = useState(window.xnft?.publicKeys);
+export function usePublicKeys(): { [key: string]: PublicKey }|undefined {
+  const didLaunch = useDidLaunch() 
+  const [publicKeys, setPublicKeys] = useState();
   useEffect(() => {
-    window.xnft.on("publicKeysUpdate", () => {
+    if(didLaunch) {
+      window.xnft.on("publicKeysUpdate", () => {
+        setPublicKeys(window.xnft.publicKeys);
+      });
       setPublicKeys(window.xnft.publicKeys);
-    });
-  }, [setPublicKeys]);
+    }
+  }, [didLaunch, setPublicKeys]);
   return publicKeys;
 }
 
 /** @deprecated use blockchain-specific connections instead */
-export function useConnection(): Connection {
-  const [connection, setConnection] = useState(window.xnft.solana?.connection);
+export function useConnection(): Connection|undefined {
+  const didLaunch = useDidLaunch() 
+  const [connection, setConnection] = useState();
   useEffect(() => {
-    window.xnft.solana?.on("connectionUpdate", () => {
+    if(didLaunch) {
+      window.xnft.solana.on("connectionUpdate", () => {
+        setConnection(window.xnft.solana.connection);
+      });
       setConnection(window.xnft.solana.connection);
-    });
-  }, [setConnection]);
+    }
+  }, [didLaunch, setConnection]);
   return connection;
 }
 
-export function useSolanaConnection(): Connection {
-  const [connection, setConnection] = useState(window.xnft.solana?.connection);
+export function useSolanaConnection(): Connection|undefined {
+  const didLaunch = useDidLaunch()
+  const [connection, setConnection] = useState();
   useEffect(() => {
-    window.xnft.solana?.on("connectionUpdate", () => {
+    if (didLaunch) {
+      window.xnft.solana.on("connectionUpdate", () => {
+        setConnection(window.xnft.solana.connection);
+      });
       setConnection(window.xnft.solana.connection);
-    });
-  }, [setConnection]);
+    }
+  }, [didLaunch, setConnection]);
   return connection;
 }
 
-export function useEthereumConnection(): Connection {
-  const [connection, setConnection] = useState(
-    window.xnft.ethereum?.connection
-  );
+export function useEthereumConnection(): Connection|undefined {
+  const didLaunch = useDidLaunch() 
+  const [connection, setConnection] = useState();
   useEffect(() => {
-    window.xnft.ethereum?.on("connectionUpdate", () => {
+    if(didLaunch) {
+      window.xnft.ethereum?.on("connectionUpdate", () => {
+        setConnection(window.xnft.ethereum.connection);
+      });
       setConnection(window.xnft.ethereum.connection);
-    });
-  }, [setConnection]);
+    }
+  }, [didLaunch, setConnection]);
   return connection;
 }
 
@@ -82,15 +100,18 @@ export function useDidLaunch() {
 
 export const useReady = useDidLaunch;
 
-export function useMetadata(): XnftMetadata {
-  const [metadata, setMetadata] = useState(window.xnft?.metadata || {});
+export function useMetadata(): XnftMetadata|undefined {
+  const didLaunch = useDidLaunch() 
+  const [metadata, setMetadata] = useState();
 
   useEffect(() => {
-    setMetadata(window.xnft?.metadata || {});
-    window.xnft.addListener("metadata", (event: Event) => {
-      setMetadata(event.data.metadata);
-    });
-  }, []);
+    if(didLaunch) {
+      setMetadata(window.xnft.metadata);
+      window.xnft.addListener("metadata", (event: Event) => {
+        setMetadata(event.data.metadata);
+      });
+    }
+  }, [didLaunch, setMetadata]);
   return metadata;
 }
 
