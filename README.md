@@ -8,9 +8,16 @@ Once you've installed Backpack, get started building your xNFT with these steps.
 
 Further documentation: https://docs.xnfts.dev/getting-started/getting-started
 
+### Update Node Version
+Update Node version using `nvm`. If you don't nvm install, follow the instructions in this [link](https://github.com/nvm-sh/nvm#installing-and-updating)
+
+```
+nvm use
+```
+
 ### Install
 
-First, install dependencies.
+Install dependencies.
 
 ```
 yarn
