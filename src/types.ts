@@ -10,21 +10,21 @@ export interface SolanaXnftInjection {
 }
 
 export class XnftWallet implements Wallet {
-  xnftInjection: SolanaXnftInjection;
+  #xnftInjection: SolanaXnftInjection;
 
   constructor(xnftObj: SolanaXnftInjection) {
-    this.xnftInjection = xnftObj;
+    this.#xnftInjection = xnftObj;
   }
 
   get publicKey() {
-    return this.xnftInjection.publicKey;
+    return this.#xnftInjection.publicKey;
   }
 
   signTransaction<T extends Transaction | VersionedTransaction>(tx: T): Promise<T> {
-    return this.xnftInjection.signTransaction(tx);
+    return this.#xnftInjection.signTransaction(tx);
   }
 
   signAllTransactions<T extends Transaction | VersionedTransaction>(txs: T[]): Promise<T[]> {
-    return this.xnftInjection.signAllTransactions(txs);
+    return this.#xnftInjection.signAllTransactions(txs);
   }
 }
