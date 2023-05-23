@@ -84,7 +84,7 @@ export function useEthereumConnection(): Connection|undefined {
 
 // Returns true if the `window.xnft` object is ready to be used.
 export function useDidLaunch() {
-  const [didConnect, setDidConnect] = useState(false);
+  const [didConnect, setDidConnect] = useState(!!window.xnft?.connection);
   useEffect(() => {
     window.addEventListener("load", () => {
       window.xnft.on("connect", () => {
