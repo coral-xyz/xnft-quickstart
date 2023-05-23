@@ -8,6 +8,7 @@
     "dev": "expo start --web & npx xnft --iframe http://localhost:19006"
   },
   "dependencies": {
+    "@coral-xyz/anchor": "^0.27.0",
     "@coral-xyz/common-public": "^0.2.0-latest.3375",
     "@expo-google-fonts/dev": "*",
     "@expo/vector-icons": "^13.0.0",
