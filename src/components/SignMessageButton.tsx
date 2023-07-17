@@ -1,6 +1,7 @@
 import { Button, Text } from "react-native";
 
 import { useReducer } from "react";
+import { Buffer } from "buffer";
 
 enum Status {
   IDLE,
